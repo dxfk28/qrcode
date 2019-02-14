@@ -37,9 +37,9 @@
 <% end %>
 <span class="pagination"><%= pagination_links_full @news_pages %></span>
 
-  <%# other_formats_links do |f| %>
-    <%#= f.link_to 'Atom', :url => {:project_id => @project, :key => User.current.rss_key} %>
-  <%# end %>
+<%# other_formats_links do |f| %>
+  <%#= f.link_to 'Atom', :url => {:project_id => @project, :key => User.current.rss_key} %>
+<%# end %>
 
 <% content_for :header_tags do %>
   <%= auto_discovery_link_tag(:atom, _project_news_path(@project, :key => User.current.rss_key, :format => 'atom')) %>
