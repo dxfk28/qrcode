@@ -147,6 +147,14 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def self.download_count(issues)
+    issues.each do |issue|
+      cf = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:100)
+      cf.value = cf.value.to_i + 1
+      cf.save
+    end
+  end
+
   # Returns true if usr or current user is allowed to view the issue
   def visible?(usr=nil)
     (usr || User.current).allowed_to?(:view_issues, self.project) do |role, user|

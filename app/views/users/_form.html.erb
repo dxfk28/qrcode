@@ -12,6 +12,12 @@
   <% unless @user.force_default_language? %>
   <p><%= f.select :language, lang_options_for_select %></p>
   <% end %>
+  <p><%= f.check_box :service %></p>
+  <p><%= f.check_box :up %></p>
+  <p><%= f.check_box :down %></p>
+  <p><%= f.check_box :serach %></p>
+  <p><%= f.check_box :preview %></p>
+  <p><%= f.text_field :department %></p>
   <% if Setting.openid? %>
   <p><%= f.text_field :identity_url  %></p>
   <% end %>

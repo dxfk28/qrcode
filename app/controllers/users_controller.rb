@@ -35,6 +35,12 @@ class UsersController < ApplicationController
 
   require_sudo_mode :create, :update, :destroy
 
+  def import_users_change
+    message = User.import_users_change(params[:file].path)
+    flash[:notice] = message
+    redirect_to users_path()
+  end
+
   def index
     sort_init 'login', 'asc'
     sort_update %w(login firstname lastname admin created_on last_login_on)

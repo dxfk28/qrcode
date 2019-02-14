@@ -19,11 +19,12 @@
 <%= render :partial => 'issues/list', :locals => {:issues => @issues, :query => @query} %>
 <span class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></span>
 <% end %>
-
+<% if User.current.admin? || User.current.down %>
 <% other_formats_links do |f| %>
-  <%= f.link_to_with_query_parameters 'Atom', :key => User.current.rss_key %>
-  <%= f.link_to_with_query_parameters 'CSV', {}, :onclick => "showModal('csv-export-options', '350px'); return false;" %>
-  <%= f.link_to_with_query_parameters 'PDF' %>
+  <%#= f.link_to_with_query_parameters 'Atom', :key => User.current.rss_key %>
+  <%= f.link_to_with_query_parameters 'CSV', {}, :onclick => "showModal('csv-export-options', '350px'); return false;"  %>
+  <%#= f.link_to_with_query_parameters 'PDF' %>
+<% end %>
 <% end %>
 
 <div id="csv-export-options" style="display:none;">

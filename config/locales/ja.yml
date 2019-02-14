@@ -469,6 +469,7 @@ ja:
   label_user_plural: ユーザー
   label_user_new: 新しいユーザー
   label_user_anonymous: 匿名ユーザー
+  label_user_update: 一括更新
   label_profile: プロフィール
   label_project: プロジェクト
   label_project_new: 新しいプロジェクト

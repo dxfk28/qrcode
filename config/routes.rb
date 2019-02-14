@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   match 'account/register', :to => 'account#register', :via => [:get, :post], :as => 'register'
   match 'account/lost_password', :to => 'account#lost_password', :via => [:get, :post], :as => 'lost_password'
   match 'account/activate', :to => 'account#activate', :via => :get
+  match 'account/check_id', :to => 'account#check_id', :via => :get
   get 'account/activation_email', :to => 'account#activation_email', :as => 'activation_email'
 
   match '/news/preview', :controller => 'previews', :action => 'news', :as => 'preview_news', :via => [:get, :post, :put, :patch]
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
   match '/issues/context_menu', :to => 'context_menus#issues', :as => 'issues_context_menu', :via => [:get, :post]
   match '/issues/changes', :to => 'journals#index', :as => 'issue_changes', :via => :get
   match '/issues/:id/quoted', :to => 'journals#new', :id => /\d+/, :via => :post, :as => 'quoted_issue'
+  match '/issues/create_data', :to => 'issues#create_data', :via => :get
 
   resources :journals, :only => [:edit, :update] do
     member do
@@ -83,6 +85,10 @@ Rails.application.routes.draw do
   match 'my/order_blocks', :controller => 'my', :action => 'order_blocks', :via => :post
 
   resources :users do
+    collection do
+      get :import_change
+      post :import_users_change
+    end
     resources :memberships, :controller => 'principal_memberships'
     resources :email_addresses, :only => [:index, :create, :update, :destroy]
   end

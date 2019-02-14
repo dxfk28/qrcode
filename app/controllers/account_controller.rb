@@ -32,6 +32,19 @@ class AccountController < ApplicationController
     end
   end
 
+  def check_id
+    user = User.try_to_login(params[:username], params[:password], false)
+    if user.present?
+      if user.up
+        render json: {"result" => true} and return
+      else
+        render json: {"result" => false} and return
+      end
+    else
+      render json: {"result" => '用户名或密码不对'} and return
+    end
+  end
+
   # Login request and validation
   def login
     if request.post?

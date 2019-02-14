@@ -16,7 +16,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require "digest/sha1"
-
 class User < Principal
   include Redmine::SafeAttributes
 
@@ -173,6 +172,62 @@ class User < Principal
     @visible_project_ids = nil
     @managed_roles = nil
     base_reload(*args)
+  end
+
+  def self.import_users_change(filepath)
+    Spreadsheet.client_encoding = 'UTF-8'
+    book = Spreadsheet.open(filepath)
+    sheet = book.worksheet(0)
+    message =''
+    count = 0
+    User.transaction do
+      sheet.each_with_index do |row, index|
+        if index == 0
+        else
+          user = User.find_or_create_by(login:row[0])
+          if user.id.present?
+            user.login = row[0]
+            user.firstname = row[0]
+            user.lastname = row[7]
+            user.department = row[8]
+            user.service = row[1] == '〇' ? true : false
+            user.up = row[2] == '〇' ? true : false
+            user.down = row[3] == '〇' ? true : false
+            user.serach = row[4] == '〇' ? true : false
+            user.preview = row[5] == '〇' ? true : false
+            user.admin = row[6] == '〇' ? true : false
+            begin
+              user.save
+            rescue Exception => e
+              message = '更新失败,员工号：' + row[0] + '失败原因:' + e.message
+              raise ActiveRecord::Rollback
+            end
+          else
+            user.login = row[0]
+            user.firstname = row[0]
+            user.lastname = row[7]
+            user.department = row[8]
+            user.service = row[1] == '〇' ? true : false
+            user.up = row[2] == '〇' ? true : false
+            user.down = row[3] == '〇' ? true : false
+            user.serach = row[4] == '〇' ? true : false
+            user.preview = row[5] == '〇' ? true : false
+            user.admin = row[6] == '〇' ? true : false
+            user.mail = row[0] + '@163.com'
+            user.password = '12345678'
+            user.password_confirmation = '12345678'
+            begin
+              user.save
+            rescue Exception => e
+              message = '更新失败,员工号：' + row[0] + '失败原因:' + e.message
+              raise ActiveRecord::Rollback
+            end
+          end
+        end
+      end
+      message = '成功更新' +sheet.count.to_s + '条'
+    end
+    message
   end
 
   def mail

@@ -20,11 +20,11 @@ class IssuesController < ApplicationController
 
   before_action :find_issue, :only => [:show, :edit, :update]
   before_action :find_issues, :only => [:bulk_edit, :bulk_update, :destroy]
-  before_action :authorize, :except => [:index, :new, :create]
+  before_action :authorize, :except => [:index, :new, :create,:create_data]
   before_action :find_optional_project, :only => [:index, :new, :create]
   before_action :build_new_issue_from_params, :only => [:new, :create]
   accept_rss_auth :index, :show
-  accept_api_auth :index, :show, :create, :update, :destroy
+  accept_api_auth :index, :show, :create, :update, :destroy, :create_data
 
   rescue_from Query::StatementInvalid, :with => :query_statement_invalid
 
@@ -38,6 +38,122 @@ class IssuesController < ApplicationController
   include QueriesHelper
   helper :repositories
   helper :timelog
+
+
+  def create_data
+    is_true = true
+    message = ''
+    user = User.find_by(login:params[:username])
+    if user.blank?
+      is_true = false
+      message = '用户不存在'
+      return
+    end
+    issue_info = Issue.find_by(project_id:2,tracker_id:5,subject:params[:SN])
+    if issue_info.blank?
+      is_true = false
+      message = '该SN号没有对应设备信息'
+      return
+    end
+    Issue.transaction do
+      issue = Issue.new(project_id:1,tracker_id:4)
+      issue.subject = '--'
+      issue.status_id = 1
+      issue.priority_id = 1
+      issue.author_id = 1
+      unless issue.save
+        is_true = false
+        message = 'issue数据创建失败'
+        raise ActiveRecord::Rollback
+      end
+      cf1 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:9)
+      cf1.value = params[:NAME]
+      cf2 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:16)
+      cf2.value = params[:SN]
+      cf3 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:62)
+      cf3.value = params[:Time]
+      cf4 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:60)
+      cf4.value = params[:CTT].to_i + params[:PTT].to_i + params[:STS].to_i
+      cf5 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:61)
+      cf5.value = params[:PTT].to_i
+      cf6 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:63)
+      cf6.value = cf4.value
+      cf7 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:67)
+      cf7.value = params[:CTT]
+      cf8 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:68)
+      cf8.value = params[:CTB]
+      cf9 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:69)
+      cf9.value = params[:CTF]
+      cf10 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:71)
+      cf10.value = params[:CTS]
+      cf11 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:72)
+      cf11.value = params[:CTD]
+      cf12 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:73)
+      cf12.value = params[:CLT]
+      cf13 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:74)
+      cf13.value = params[:CLB]
+      cf14 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:75)
+      cf14.value = params[:CLF]
+      cf15 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:76)
+      cf15.value = params[:CLS]
+      cf16 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:77)
+      cf16.value = params[:CLD]
+      cf17 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:78)
+      cf17.value = params[:PTT]
+      cf18 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:79)
+      cf18.value = params[:PTB]
+      cf19 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:80)
+      cf19.value = params[:PTF]
+      cf20 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:81)
+      cf20.value = params[:PTD]
+      cf21 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:82)
+      cf21.value = params[:PLT]
+      cf22 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:83)
+      cf22.value = params[:PLB]
+      cf23 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:84)
+      cf23.value = params[:PLF]
+      cf24 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:85)
+      cf24.value = params[:PLD]
+      cf25 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:88)
+      cf25.value = params[:STS]
+      cf26 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:89)
+      cf26.value = params[:SLS]
+      cf27 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:92)
+      cf27.value = params[:CTF].to_i + params[:PTF].to_i + params[:STF].to_i
+      cf28 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:93)
+      cf28.value = params[:CTB].to_i + params[:PTB].to_i + params[:STB].to_i
+      cf29 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:94)
+      cf29.value = params[:CTD].to_i + params[:PTD].to_i
+      cf30 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:98)
+      cf30.value = params[:SLF]
+      cf31 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:7)
+      cf31.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:7).value
+      cf32 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:8)
+      cf32.value = params[:SN]
+      cf33 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:10)
+      cf33.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:10).value
+      cf34 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:11)
+      cf34.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:11).value
+      cf35 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:59)
+      cf35.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:59).value
+      cf36 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:14)
+      cf36.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:14).value
+      cf37 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:15)
+      cf37.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:15).value
+      cf38 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:18)
+      cf38.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:18).value
+      cf39 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:19)
+      cf39.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:19).value 
+      cf40 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:99)
+      cf40.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:99).value
+      unless cf1.save && cf2.save && cf3.save && cf4.save && cf5.save && cf6.save && cf7.save && cf8.save && cf9.save && cf10.save && cf11.save && cf12.save && cf13.save && cf14.save && cf15.save && cf16.save && cf17.save && cf18.save && cf19.save && cf20.save && cf21.save && cf22.save && cf23.save && cf24.save && cf25.save && cf26.save && cf27.save && cf28.save && cf29.save && cf30.save && cf31.save&& cf32.save&& cf33.save&& cf34.save&& cf35.save&& cf36.save&& cf37.save&& cf38.save&& cf39.save&&cf40.save
+        is_true = false
+        message = '自定义属性创建失败'
+        raise ActiveRecord::Rollback
+      end
+    end
+    return render json: {"result" => is_true, 'message' => message}
+  end
 
   def index
     use_session = !request.format.csv?
@@ -64,6 +180,7 @@ class IssuesController < ApplicationController
         }
         format.csv  {
           @issues = @query.issues(:limit => Setting.issues_export_limit.to_i)
+          Issue.download_count(@issues)
           send_data(query_to_csv(@issues, @query, params[:csv]), :type => 'text/csv; header=present', :filename => 'issues.csv')
         }
         format.pdf  {

@@ -154,7 +154,7 @@ module ApplicationHelper
       h(project.name)
     else
       link_to project.name,
-        project_url(project, {:only_path => true}.merge(options)),
+        project_issues_url(project, :set_filter => 1),
         html_options
     end
   end

@@ -216,7 +216,12 @@ zh:
   mail_subject_wiki_content_updated: "'%{id}' wiki页面已更新。"
   mail_body_wiki_content_updated: "'%{id}' wiki页面已由 %{author} 更新。"
 
-
+  field_service: 服务id
+  field_up: 上传计数信息权限
+  field_down: 下载CSV权限
+  field_serach: 检索权限
+  field_preview: 预览权限
+  field_department: 组织
   field_name: 名称
   field_description: 描述
   field_summary: 摘要
@@ -440,6 +445,7 @@ zh:
   label_user_plural: 用户
   label_user_new: 新建用户
   label_user_anonymous: 匿名用户
+  label_user_update: 批量更新
   label_project: 项目
   label_project_new: 新建项目
   label_project_plural: 项目
