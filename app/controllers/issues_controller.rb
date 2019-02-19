@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
+# require 'aes'
 class IssuesController < ApplicationController
   default_search_scope :issues
 
@@ -39,17 +39,29 @@ class IssuesController < ApplicationController
   helper :repositories
   helper :timelog
 
+  def decrypt(encrypted)
+    dec = OpenSSL::Cipher.new('aes-128-ecb')
+    dec.key = 'KaNdKgMjN5l8D5JT'
+    dec.decrypt
+    plain_text = ""
+    plain_text << dec.update(Base64.decode64(encrypted))
+    plain_text << dec.final
+    return plain_text
+  end
 
   def create_data
+    # binding.pry
+    content = decrypt(params[:msg])
+    result = JSON.parse content
     is_true = true
     message = ''
-    user = User.find_by(login:params[:username])
+    user = User.find_by(login:result['username'])
     if user.blank?
       is_true = false
       message = '用户不存在'
       return
     end
-    issue_info = Issue.find_by(project_id:2,tracker_id:5,subject:params[:SN])
+    issue_info = Issue.find_by(project_id:2,tracker_id:5,subject:result['SN'])
     if issue_info.blank?
       is_true = false
       message = '该SN号没有对应设备信息'
@@ -67,69 +79,69 @@ class IssuesController < ApplicationController
         raise ActiveRecord::Rollback
       end
       cf1 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:9)
-      cf1.value = params[:NAME]
+      cf1.value = result['NAME']
       cf2 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:16)
-      cf2.value = params[:SN]
+      cf2.value = result['SN']
       cf3 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:62)
-      cf3.value = params[:Time]
+      cf3.value = result['Time']
       cf4 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:60)
-      cf4.value = params[:CTT].to_i + params[:PTT].to_i + params[:STS].to_i
+      cf4.value = result['CTT'].to_i + result['PTT'].to_i + result['STS'].to_i
       cf5 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:61)
-      cf5.value = params[:PTT].to_i
+      cf5.value = result['PTT'].to_i
       cf6 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:63)
       cf6.value = cf4.value
       cf7 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:67)
-      cf7.value = params[:CTT]
+      cf7.value = result['CTT']
       cf8 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:68)
-      cf8.value = params[:CTB]
+      cf8.value = result['CTB']
       cf9 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:69)
-      cf9.value = params[:CTF]
+      cf9.value = result['CTF']
       cf10 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:71)
-      cf10.value = params[:CTS]
+      cf10.value = result['CTS']
       cf11 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:72)
-      cf11.value = params[:CTD]
+      cf11.value = result['CTD']
       cf12 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:73)
-      cf12.value = params[:CLT]
+      cf12.value = result['CLT']
       cf13 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:74)
-      cf13.value = params[:CLB]
+      cf13.value = result['CLB']
       cf14 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:75)
-      cf14.value = params[:CLF]
+      cf14.value = result['CLF']
       cf15 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:76)
-      cf15.value = params[:CLS]
+      cf15.value = result['CLS']
       cf16 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:77)
-      cf16.value = params[:CLD]
+      cf16.value = result['CLD']
       cf17 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:78)
-      cf17.value = params[:PTT]
+      cf17.value = result['PTT']
       cf18 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:79)
-      cf18.value = params[:PTB]
+      cf18.value = result['PTB']
       cf19 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:80)
-      cf19.value = params[:PTF]
+      cf19.value = result['PTF']
       cf20 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:81)
-      cf20.value = params[:PTD]
+      cf20.value = result['PTD']
       cf21 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:82)
-      cf21.value = params[:PLT]
+      cf21.value = result['PLT']
       cf22 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:83)
-      cf22.value = params[:PLB]
+      cf22.value = result['PLB']
       cf23 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:84)
-      cf23.value = params[:PLF]
+      cf23.value = result['PLF']
       cf24 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:85)
-      cf24.value = params[:PLD]
+      cf24.value = result['PLD']
       cf25 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:88)
-      cf25.value = params[:STS]
+      cf25.value = result['STS']
       cf26 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:89)
-      cf26.value = params[:SLS]
+      cf26.value = result['SLS']
       cf27 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:92)
-      cf27.value = params[:CTF].to_i + params[:PTF].to_i + params[:STF].to_i
+      cf27.value = result['CTF'].to_i + result['PTF'].to_i + result['STF'].to_i
       cf28 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:93)
-      cf28.value = params[:CTB].to_i + params[:PTB].to_i + params[:STB].to_i
+      cf28.value = result['CTB'].to_i + result['PTB'].to_i + result['STB'].to_i
       cf29 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:94)
-      cf29.value = params[:CTD].to_i + params[:PTD].to_i
+      cf29.value = result['CTD'].to_i + result['PTD'].to_i
       cf30 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:98)
-      cf30.value = params[:SLF]
+      cf30.value = result['SLF']
       cf31 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:7)
       cf31.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:7).value
       cf32 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:8)
-      cf32.value = params[:SN]
+      cf32.value = result['SN']
       cf33 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:10)
       cf33.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:10).value
       cf34 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:11)

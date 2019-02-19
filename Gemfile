@@ -24,6 +24,7 @@ gem 'better_errors', '2.1.1'
 gem "binding_of_caller", "~> 0.7.2"
 gem 'pry-byebug'
 gem 'spreadsheet', '1.1.2'
+gem 'aescrypt'
 # Optional gem for LDAP authentication
 group :ldap do
   gem "net-ldap", "~> 0.16.0"
