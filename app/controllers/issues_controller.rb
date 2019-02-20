@@ -50,7 +50,6 @@ class IssuesController < ApplicationController
   end
 
   def create_data
-    # binding.pry
     content = decrypt(params[:msg])
     result = JSON.parse content
     is_true = true
@@ -72,7 +71,7 @@ class IssuesController < ApplicationController
       issue.subject = '--'
       issue.status_id = 1
       issue.priority_id = 1
-      issue.author_id = 1
+      issue.author_id = user.id
       unless issue.save
         is_true = false
         message = 'issue数据创建失败'
