@@ -48,12 +48,12 @@
                    :key => User.current.rss_key) %>
    <% end %>
 
-   <% other_formats_links do |f| %>
-    <%= f.link_to 'Atom',
+   <%# other_formats_links do |f| %>
+    <%#= f.link_to 'Atom',
                   :url => {:action => 'revisions', :id => @project,
                            :repository_id => @repository.identifier_param,
                            :key => User.current.rss_key} %>
-    <% end %>
+    <%# end %>
   <% end %>
 <% end %>
 

@@ -455,11 +455,11 @@ zh:
     other: "%{count} 个项目"
   label_project_all: 所有的项目
   label_project_latest: 最近的项目
-  label_issue: 问题
-  label_issue_new: 新建问题
-  label_issue_plural: 问题
-  label_issue_view_all: 查看所有问题
-  label_issues_by: "按 %{value} 分组显示问题"
+  label_issue: 数据
+  label_issue_new: 新建数据
+  label_issue_plural: 数据
+  label_issue_view_all: 查看所有数据
+  label_issues_by: "按 %{value} 分组显示数据"
   label_issue_added: 问题已添加
   label_issue_updated: 问题已更新
   label_document: 文档
@@ -477,9 +477,9 @@ zh:
   label_tracker_plural: 跟踪标签
   label_tracker_new: 新建跟踪标签
   label_workflow: 工作流程
-  label_issue_status: 问题状态
-  label_issue_status_plural: 问题状态
-  label_issue_status_new: 新建问题状态
+  label_issue_status: 数据状态
+  label_issue_status_plural: 数据状态
+  label_issue_status_new: 新建数据状态
   label_issue_category: 问题类别
   label_issue_category_plural: 问题类别
   label_issue_category_new: 新建问题类别

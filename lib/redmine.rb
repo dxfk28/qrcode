@@ -187,10 +187,10 @@ end
 
 Redmine::MenuManager.map :top_menu do |menu|
   menu.push :home, :home_path
-  menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
+  # menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
   menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural
   menu.push :administration, { :controller => 'admin', :action => 'index' }, :if => Proc.new { User.current.admin? }, :last => true
-  menu.push :help, Redmine::Info.help_url, :last => true
+  # menu.push :help, Redmine::Info.help_url, :last => true
 end
 
 Redmine::MenuManager.map :account_menu do |menu|
@@ -204,20 +204,20 @@ Redmine::MenuManager.map :application_menu do |menu|
   menu.push :projects, {:controller => 'projects', :action => 'index'},
     :permission => nil,
     :caption => :label_project_plural
-  menu.push :activity, {:controller => 'activities', :action => 'index'}
+  # menu.push :activity, {:controller => 'activities', :action => 'index'}
   menu.push :issues,   {:controller => 'issues', :action => 'index'},
     :if => Proc.new {User.current.allowed_to?(:view_issues, nil, :global => true)},
     :caption => :label_issue_plural
-  menu.push :time_entries, {:controller => 'timelog', :action => 'index'},
-    :if => Proc.new {User.current.allowed_to?(:view_time_entries, nil, :global => true)},
-    :caption => :label_spent_time
-  menu.push :gantt, { :controller => 'gantts', :action => 'show' }, :caption => :label_gantt,
-    :if => Proc.new {User.current.allowed_to?(:view_gantt, nil, :global => true)}
-  menu.push :calendar, { :controller => 'calendars', :action => 'show' }, :caption => :label_calendar,
-    :if => Proc.new {User.current.allowed_to?(:view_calendar, nil, :global => true)}
-  menu.push :news, {:controller => 'news', :action => 'index'},
-    :if => Proc.new {User.current.allowed_to?(:view_news, nil, :global => true)},
-    :caption => :label_news_plural
+  # menu.push :time_entries, {:controller => 'timelog', :action => 'index'},
+  #   :if => Proc.new {User.current.allowed_to?(:view_time_entries, nil, :global => true)},
+  #   :caption => :label_spent_time
+  # menu.push :gantt, { :controller => 'gantts', :action => 'show' }, :caption => :label_gantt,
+  #   :if => Proc.new {User.current.allowed_to?(:view_gantt, nil, :global => true)}
+  # menu.push :calendar, { :controller => 'calendars', :action => 'show' }, :caption => :label_calendar,
+  #   :if => Proc.new {User.current.allowed_to?(:view_calendar, nil, :global => true)}
+  # menu.push :news, {:controller => 'news', :action => 'index'},
+  #   :if => Proc.new {User.current.allowed_to?(:view_news, nil, :global => true)},
+  #   :caption => :label_news_plural
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|
@@ -241,27 +241,27 @@ Redmine::MenuManager.map :admin_menu do |menu|
             :html => {:class => 'icon icon-list'}
   menu.push :settings, {:controller => 'settings'},
             :html => {:class => 'icon icon-settings'}
-  menu.push :ldap_authentication, {:controller => 'auth_sources', :action => 'index'},
-            :html => {:class => 'icon icon-server-authentication'}
-  menu.push :plugins, {:controller => 'admin', :action => 'plugins'}, :last => true,
-            :html => {:class => 'icon icon-plugins'}
-  menu.push :info, {:controller => 'admin', :action => 'info'}, :caption => :label_information_plural, :last => true,
-            :html => {:class => 'icon icon-help'}
+  # menu.push :ldap_authentication, {:controller => 'auth_sources', :action => 'index'},
+  #           :html => {:class => 'icon icon-server-authentication'}
+  # menu.push :plugins, {:controller => 'admin', :action => 'plugins'}, :last => true,
+  #           :html => {:class => 'icon icon-plugins'}
+  # menu.push :info, {:controller => 'admin', :action => 'info'}, :caption => :label_information_plural, :last => true,
+  #           :html => {:class => 'icon icon-help'}
 end
 
 Redmine::MenuManager.map :project_menu do |menu|
-  menu.push :new_object, nil, :caption => ' + ',
-              :if => Proc.new { |p| Setting.new_item_menu_tab == '2' },
-              :html => { :id => 'new-object', :onclick => 'toggleNewObjectDropdown(); return false;' }
-  menu.push :new_issue_sub, { :controller => 'issues', :action => 'new', :copy_from => nil }, :param => :project_id, :caption => :label_issue_new,
-              :html => { :accesskey => Redmine::AccessKeys.key_for(:new_issue) },
-              :if => Proc.new { |p| Issue.allowed_target_trackers(p).any? },
-              :permission => :add_issues,
-              :parent => :new_object
-  menu.push :new_issue_category, {:controller => 'issue_categories', :action => 'new'}, :param => :project_id, :caption => :label_issue_category_new,
-              :parent => :new_object
-  menu.push :new_version, {:controller => 'versions', :action => 'new'}, :param => :project_id, :caption => :label_version_new,
-              :parent => :new_object
+  # menu.push :new_object, nil, :caption => ' + ',
+  #             :if => Proc.new { |p| Setting.new_item_menu_tab == '2' },
+  #             :html => { :id => 'new-object', :onclick => 'toggleNewObjectDropdown(); return false;' }
+  # menu.push :new_issue_sub, { :controller => 'issues', :action => 'new', :copy_from => nil }, :param => :project_id, :caption => :label_issue_new,
+  #             :html => { :accesskey => Redmine::AccessKeys.key_for(:new_issue) },
+  #             :if => Proc.new { |p| Issue.allowed_target_trackers(p).any? },
+  #             :permission => :add_issues,
+  #             :parent => :new_object
+  # menu.push :new_issue_category, {:controller => 'issue_categories', :action => 'new'}, :param => :project_id, :caption => :label_issue_category_new,
+  #             :parent => :new_object
+  # menu.push :new_version, {:controller => 'versions', :action => 'new'}, :param => :project_id, :caption => :label_version_new,
+  #             :parent => :new_object
   menu.push :new_timelog, {:controller => 'timelog', :action => 'new'}, :param => :project_id, :caption => :button_log_time,
               :parent => :new_object
   menu.push :new_news, {:controller => 'news', :action => 'new'}, :param => :project_id, :caption => :label_news_new,
@@ -274,7 +274,7 @@ Redmine::MenuManager.map :project_menu do |menu|
               :parent => :new_object
 
   menu.push :overview, { :controller => 'projects', :action => 'show' }
-  menu.push :activity, { :controller => 'activities', :action => 'index' }
+  # menu.push :activity, { :controller => 'activities', :action => 'index' }
   menu.push :roadmap, { :controller => 'versions', :action => 'index' }, :param => :project_id,
               :if => Proc.new { |p| p.shared_versions.any? }
   menu.push :issues, { :controller => 'issues', :action => 'index' }, :param => :project_id, :caption => :label_issue_plural
