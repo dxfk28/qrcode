@@ -29,6 +29,7 @@ rescue LoadError
 end
 
 require 'redmine/acts/positioned'
+require 'redmine/info'
 
 require 'redmine/scm/base'
 require 'redmine/access_control'
