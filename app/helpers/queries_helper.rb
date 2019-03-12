@@ -273,7 +273,7 @@ module QueriesHelper
   end
 
   def query_to_csv(items, query, options={})
-    columns = query.columns
+    columns = query.columns.select{|i| i.name.to_s.split("_")[0] == "cf" && i.name.to_s.split("_")[1].to_i != 100}
 
     Redmine::Export::CSV.generate(:encoding => params[:encoding]) do |csv|
       # csv header fields
