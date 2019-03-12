@@ -1560,12 +1560,13 @@ module ApplicationHelper
 
   def export_csv_encoding_select_tag
     return if l(:general_csv_encoding).casecmp('UTF-8') == 0
-    options = [l(:general_csv_encoding), 'UTF-8']
+    options = ['UTF-8', l(:general_csv_encoding)]
+    # options = [l(:general_csv_encoding), 'UTF-8']
     content_tag(:p) do
       concat(
         content_tag(:label) do
           concat l(:label_encoding) + ' '
-          concat select_tag('encoding', options_for_select(options, l(:general_csv_encoding)))
+          concat select_tag('encoding', options_for_select(options, 'UTF-8'))
         end
       )
     end
