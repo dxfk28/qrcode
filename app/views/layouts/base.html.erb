@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <title><%= html_title %></title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="description" content="<%= Redmine::Info.app_name %>" />
+<meta name="description" content="<%#= Redmine::Info.app_name %>" />
 <meta name="keywords" content="issue,bug,tracker" />
 <%= csrf_meta_tag %>
 <%= favicon %>
@@ -85,7 +85,7 @@
         <%= render_project_jump_box %>
     </div>
     <% end %>
-
+    <img src="/images/logo.png" style="height: 55px; float: left; background-repeat: no-repeat;">    
     <h1><%= page_header_title %></h1>
 
     <% if display_main_menu?(@project) %>
@@ -119,7 +119,7 @@
 
 <div id="footer">
   <div class="bgl"><div class="bgr">
-    <!-- Powered by <%= link_to Redmine::Info.app_name, Redmine::Info.url %> &copy; 2006-2018 Jean-Philippe Lang -->
+    <!-- Powered by <%#= link_to Redmine::Info.app_name, Redmine::Info.url %> &copy; 2006-2018 Jean-Philippe Lang -->
   </div></div>
 </div>
 </div>
