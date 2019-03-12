@@ -32,12 +32,12 @@
   <%= form_tag(_project_issues_path(@project, :format => 'csv'), :method => :get, :id => 'csv-export-form') do %>
   <%= query_as_hidden_field_tags(@query) %>
   <p>
-    <label><%= radio_button_tag 'c[]', '', true %> <%= l(:description_selected_columns) %></label><br />
-    <label><%= radio_button_tag 'c[]', 'all_inline' %> <%= l(:description_all_columns) %></label>
+    <label><%= radio_button_tag 'c[]', 'all_inline', true %> <%= l(:description_all_columns) %></label><br />
+    <!-- <label><%= radio_button_tag 'c[]', '' %> <%#= l(:description_selected_columns) %></label> -->
   </p>
   <p>
-    <label><%= check_box_tag 'c[]', 'description', @query.has_column?(:description) %> <%= l(:field_description) %></label>
-    <label><%= check_box_tag 'c[]', 'last_notes', @query.has_column?(:last_notes) %> <%= l(:label_last_notes) %></label>
+    <!-- <label><%#= check_box_tag 'c[]', 'description', @query.has_column?(:description) %> <%#= l(:field_description) %></label> -->
+    <!-- <label><%#= check_box_tag 'c[]', 'last_notes', @query.has_column?(:last_notes) %> <%#= l(:label_last_notes) %></label> -->
   </p>
   <%= export_csv_encoding_select_tag %>
   <% if @issue_count > Setting.issues_export_limit.to_i %>
