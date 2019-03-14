@@ -152,6 +152,10 @@ module ApplicationHelper
   def link_to_project(project, options={}, html_options = nil)
     if project.archived?
       h(project.name)
+    elsif project.id == 1
+      link_to project.name,
+        project_issues_url(project, :query_id => 1),
+        html_options
     else
       link_to project.name,
         project_issues_url(project, :set_filter => 1),
