@@ -35,10 +35,17 @@ class AccountController < ApplicationController
   def check_id
     user = User.try_to_login(params[:username], params[:password], false)
     if user.present?
+      period = Setting.password_max_age.to_i
+      changed_on = user.passwd_changed_on || Time.at(0)
+      need_change_password = period.zero? ? false : changed_on < period.days.ago
       if user.up
-        render json: {"result" => true} and return
+        if !need_change_password
+          render json: {"result" => true} and return
+        else
+          render json: {"result" => '用户密码过期'} and return
+        end
       else
-        render json: {"result" => false} and return
+        render json: {"result" => '该用户无权上传数据'} and return
       end
     else
       render json: {"result" => '用户名或密码不对'} and return
