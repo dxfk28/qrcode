@@ -31,17 +31,17 @@
 <%= call_hook(:view_projects_form, :project => @project, :form => f) %>
 </div>
 
-<% if @project.safe_attribute?('enabled_module_names') %>
-<fieldset class="box tabular" id="project_modules"><legend><%= toggle_checkboxes_link('#project_modules input[type="checkbox"]') %><%= l(:label_module_plural) %></legend>
-<% Redmine::AccessControl.available_project_modules.each do |m| %>
-    <label class="floating">
-    <%= check_box_tag 'project[enabled_module_names][]', m, @project.module_enabled?(m), :id => "project_enabled_module_names_#{m}" %>
-    <%= l_or_humanize(m, :prefix => "project_module_") %>
-    </label>
-<% end %>
-<%= hidden_field_tag 'project[enabled_module_names][]', '' %>
-</fieldset>
-<% end %>
+<%# if @project.safe_attribute?('enabled_module_names') %>
+<!-- <fieldset class="box tabular" id="project_modules"><legend><%#= toggle_checkboxes_link('#project_modules input[type="checkbox"]') %><%#= l(:label_module_plural) %></legend> -->
+<%# Redmine::AccessControl.available_project_modules.each do |m| %>
+    <!-- <label class="floating"> -->
+    <%#= check_box_tag 'project[enabled_module_names][]', m, @project.module_enabled?(m), :id => "project_enabled_module_names_#{m}" %>
+    <%#= l_or_humanize(m, :prefix => "project_module_") %>
+    <!-- </label> -->
+<%# end %>
+<%#= hidden_field_tag 'project[enabled_module_names][]', '' %>
+<!-- </fieldset> -->
+<%# end %>
 <!--[eoform:project]-->
 
 <% unless @project.identifier_frozen? %>
