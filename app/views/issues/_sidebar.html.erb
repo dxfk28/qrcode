@@ -6,7 +6,7 @@
 <!-- <li><%#= link_to l(:field_summary), project_issues_report_path(@project) %></li> -->
 <% end %>
 
-<% if User.current.allowed_to?(:import_issues, @project, :global => true) %>
+<% if User.current.allowed_to?(:import_issues, @project, :global => true) && @project.id == 2 %>
 <li><%= link_to l(:button_import), new_issues_import_path %></li>
 <% end %>
 </ul>
