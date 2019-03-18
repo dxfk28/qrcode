@@ -149,11 +149,13 @@ class Issue < ActiveRecord::Base
 
   def self.download_count(issues)
     issues.each do |issue|
-      issue.status_id = 7
-      issue.save
       cf = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:100)
-      cf.value = cf.value.to_i + 1
-      cf.save
+      if cf.present?
+        issue.status_id = 7
+        issue.save
+        cf.value = cf.value.to_i + 1
+        cf.save
+      end
     end
   end
 
