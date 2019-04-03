@@ -105,7 +105,11 @@ class UsersController < ApplicationController
     @user.safe_attributes = params[:user]
     @user.password, @user.password_confirmation = params[:user][:password], params[:user][:password_confirmation] unless @user.auth_source_id
     @user.pref.safe_attributes = params[:pref]
-
+    @user.up = params[:user][:up] == '1' ? true : false
+    @user.down = params[:user][:down] == '1' ? true : false
+    @user.serach = params[:user][:serach] == '1' ? true : false
+    @user.preview = params[:user][:preview] == '1' ? true : false
+    @user.service = params[:user][:service] == '1' ? true : false
     if @user.save
       Mailer.deliver_account_information(@user, @user.password) if params[:send_information]
 
@@ -143,14 +147,17 @@ class UsersController < ApplicationController
       @user.password, @user.password_confirmation = params[:user][:password], params[:user][:password_confirmation]
     end
     @user.safe_attributes = params[:user]
+    @user.up = params[:user][:up] == '1' ? true : false
+    @user.down = params[:user][:down] == '1' ? true : false
+    @user.serach = params[:user][:serach] == '1' ? true : false
+    @user.preview = params[:user][:preview] == '1' ? true : false
+    @user.service = params[:user][:service] == '1' ? true : false
     # Was the account actived ? (do it before User#save clears the change)
     was_activated = (@user.status_change == [User::STATUS_REGISTERED, User::STATUS_ACTIVE])
     # TODO: Similar to My#account
     @user.pref.safe_attributes = params[:pref]
-
     if @user.save
       @user.pref.save
-
       if was_activated
         Mailer.deliver_account_activated(@user)
       elsif @user.active? && params[:send_information] && @user != User.current

@@ -15,7 +15,8 @@
     </p>
     <p>
       <label for="import_settings_encoding"><%= l(:label_encoding) %></label>
-      <%= select_tag 'import_settings[encoding]', options_for_select(Setting::ENCODINGS, @import.settings['encoding']) %>
+      <%#= select_tag 'import_settings[encoding]', options_for_select(Setting::ENCODINGS, @import.settings['encoding']) %>
+      <%= select_tag 'import_settings[encoding]', options_for_select(Setting::ENCODINGS, "UTF-8") %>
     </p>
     <p>
       <label for="import_settings_date_format"><%= l(:setting_date_format) %></label>
