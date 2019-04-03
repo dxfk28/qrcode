@@ -7,7 +7,7 @@
 <p>
   <label><%= l(:label_tracker) %></label>
   <%= select_tag 'import_settings[mapping][tracker_id]',
-        options_for_select(@import.allowed_target_trackers.sorted.map {|t| [t.name, t.id]}, @import.tracker.try(:id)),
+        options_for_select(Tracker.where(id:5).sorted.map {|t| [t.name, t.id]}, @import.tracker.try(:id)),
         :id => 'issue_tracker_id' %>
 </p>
 <p>
