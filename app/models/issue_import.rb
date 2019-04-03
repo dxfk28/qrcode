@@ -79,8 +79,9 @@ class IssueImport < Import
     issue = Issue.new
     issue.author = user
     issue.notify = false
-
-    tracker_id = nil
+    issue.tracker_id = 5
+    issue.status_id = 1
+    tracker_id = 5
     if tracker
       tracker_id = tracker.id
     elsif tracker_name = row_value(row, 'tracker')
@@ -188,7 +189,8 @@ class IssueImport < Import
     if issue.tracker_id != tracker_id
       issue.tracker_id = nil
     end
-
+    issue.tracker_id = 5
+    issue.status_id = 1
     issue
   end
 

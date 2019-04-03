@@ -10,10 +10,10 @@
         options_for_select(Tracker.where(id:5).sorted.map {|t| [t.name, t.id]}, @import.tracker.try(:id)),
         :id => 'issue_tracker_id' %>
 </p>
-<p>
+<!-- <p>
   <label for="import_mapping_status"><%= l(:field_status) %></label>
   <%= mapping_select_tag @import, 'status' %>
-</p>
+</p> -->
 
 <div class="splitcontent">
 <div class="splitcontentleft">
