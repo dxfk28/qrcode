@@ -156,6 +156,10 @@ module ApplicationHelper
       link_to project.name,
         project_issues_url(project, :query_id => 1),
         html_options
+    elsif project.id == 2
+      link_to project.name,
+        project_issues_url(project, :query_id => 2),
+        html_options
     else
       link_to project.name,
         project_issues_url(project, :set_filter => 1),

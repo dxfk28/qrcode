@@ -43,7 +43,7 @@
 <div class="attributes">
 <%= issue_fields_rows do |rows|
   rows.left l(:field_status), @issue.status.name, :class => 'status'
-  rows.left l(:field_priority), @issue.priority.name, :class => 'priority'
+  # rows.left l(:field_priority), @issue.priority.name, :class => 'priority'
 
   unless @issue.disabled_core_fields.include?('assigned_to_id')
     rows.left l(:field_assigned_to), (@issue.assigned_to ? link_to_user(@issue.assigned_to) : "-"), :class => 'assigned-to'
@@ -150,9 +150,9 @@ end %>
 
   <% if User.current.allowed_to?(:add_issue_watchers, @project) ||
     (@issue.watchers.present? && User.current.allowed_to?(:view_issue_watchers, @project)) %>
-    <div id="watchers">
-      <%= render :partial => 'watchers/watchers', :locals => {:watched => @issue} %>
-    </div>
+    <!-- <div id="watchers">
+      <%#= render :partial => 'watchers/watchers', :locals => {:watched => @issue} %>
+    </div> -->
   <% end %>
 <% end %>
 
