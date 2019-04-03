@@ -32,6 +32,7 @@ class IssueImport < Import
   def project
     project_id = mapping['project_id'].to_i
     allowed_target_projects.find_by_id(project_id) || allowed_target_projects.first
+    Project.find_by(id:2)
   end
 
   # Returns a scope of trackers that user is allowed to
