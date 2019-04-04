@@ -138,10 +138,10 @@ end %>
 
 <%= render partial: 'action_menu_edit' unless User.current.wants_comments_in_reverse_order? %>
 
-<% other_formats_links do |f| %>
+<% #other_formats_links do |f| %>
   <%#= f.link_to 'Atom', :url => {:key => User.current.rss_key} %>
-  <%= f.link_to 'PDF' %>
-<% end %>
+  <%#= f.link_to 'PDF' %>
+<%# end %>
 
 <% html_title "#{@issue.tracker.name} ##{@issue.id}: #{@issue.subject}" %>
 
