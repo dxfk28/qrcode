@@ -58,13 +58,13 @@ class IssuesController < ApplicationController
     if user.blank?
       is_true = false
       message = '用户不存在'
-      return
+      return render json: {"result" => is_true, 'message' => message}
     end
     issue_info = Issue.find_by(project_id:2,tracker_id:5,subject:result['SN'])
     if issue_info.blank?
       is_true = false
       message = '该SN号没有对应设备信息'
-      return
+      return render json: {"result" => is_true, 'message' => message}
     end
     Issue.transaction do
       issue = Issue.new(project_id:1,tracker_id:4)
@@ -157,7 +157,15 @@ class IssuesController < ApplicationController
       cf39.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:19).value 
       cf40 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:99)
       cf40.value = CustomValue.find_by(customized_type:"Issue",customized_id:issue_info.id,custom_field_id:99).value
-      unless cf1.save && cf2.save && cf3.save && cf4.save && cf5.save && cf6.save && cf7.save && cf8.save && cf9.save && cf10.save && cf11.save && cf12.save && cf13.save && cf14.save && cf15.save && cf16.save && cf17.save && cf18.save && cf19.save && cf20.save && cf21.save && cf22.save && cf23.save && cf24.save && cf25.save && cf26.save && cf27.save && cf28.save && cf29.save && cf30.save && cf31.save&& cf32.save&& cf33.save&& cf34.save&& cf35.save&& cf36.save&& cf37.save&& cf38.save&& cf39.save&&cf40.save
+      cf41 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:95)
+      cf41.value = result['STB']
+      cf42 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:96)
+      cf42.value = result['SLB']
+      cf43 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:97)
+      cf43.value = result['STF']
+      cf44 = CustomValue.find_by(customized_type:"Issue",customized_id:issue.id,custom_field_id:98)
+      cf44.value = result['SLF']
+      unless cf1.save && cf2.save && cf3.save && cf4.save && cf5.save && cf6.save && cf7.save && cf8.save && cf9.save && cf10.save && cf11.save && cf12.save && cf13.save && cf14.save && cf15.save && cf16.save && cf17.save && cf18.save && cf19.save && cf20.save && cf21.save && cf22.save && cf23.save && cf24.save && cf25.save && cf26.save && cf27.save && cf28.save && cf29.save && cf30.save && cf31.save&& cf32.save&& cf33.save&& cf34.save&& cf35.save&& cf36.save&& cf37.save&& cf38.save&& cf39.save&&cf40.save&&cf41.save&&cf42.save&&cf43.save&&cf44.save
         is_true = false
         message = '自定义属性创建失败'
         raise ActiveRecord::Rollback
